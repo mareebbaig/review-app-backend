@@ -10,9 +10,36 @@ module.exports = function SvcTalos(opts) {
         const result = await db["primary"].query(mdlTest.getUnapparovedUsers);
         return result;
     }
+    async function getAllUsers() {
+        const result = await db["primary"].query(mdlTest.getAllUsers);
+        return result;
+    }
+
+    async function getAllEmployees() {
+        const result = await db["primary"].query(mdlTest.getAllEmployees);
+        return result;
+    }
+
+    async function updateUserStatus({ user_id }) {
+        const result = await db["primary"].query(mdlTest.updateUserStatus, {
+            user_id,
+        });
+        return result;
+    }
+
+    async function deleteUser({ user_id }) {
+        const result = await db["primary"].query(mdlTest.deleteUser, {
+            user_id,
+        });
+        return result;
+    }
 
     return {
         getFromDB,
         getUnapparovedUsers,
+        getAllUsers,
+        getAllEmployees,
+        updateUserStatus,
+        deleteUser,
     };
 };
