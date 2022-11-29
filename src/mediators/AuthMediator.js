@@ -1,21 +1,22 @@
 module.exports = function AuthMediator(opts) {
-
-    const {
-        svcTalos
-    } = opts;
-
+    const { svcTalos } = opts;
 
     async function test({ number, service }) {
-        let account = 'hello';
+        let account = "hello";
 
-      //  number = sanitizePhoneNumber({ phone: number });
+        //  number = sanitizePhoneNumber({ phone: number });
 
         account = await svcTalos.getFromDB({ phone: number });
         return account;
     }
 
+    async function getUnapparovedUsers() {
+        const res = await svcTalos.getUnapparovedUsers();
+        return res;
+    }
 
     return {
-        test
-    }
-}
+        test,
+        getUnapparovedUsers,
+    };
+};

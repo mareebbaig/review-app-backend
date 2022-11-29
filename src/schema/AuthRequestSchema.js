@@ -1,8 +1,5 @@
 module.exports = function AuthRequestSchema(opts) {
-
     const { authRequestHandlers, Joi } = opts;
-
-
 
     // const verifyAuthOtvc = () => {
     //     return {
@@ -18,22 +15,24 @@ module.exports = function AuthRequestSchema(opts) {
     //     }
     // }
 
-
-
     const reqtest = () => {
         return {
-            method: 'POST',
-            url: '/test',
+            method: "POST",
+            url: "/test",
             handler: authRequestHandlers.test,
-        }
-    }
+        };
+    };
 
-
+    const getUnapparovedUsers = () => {
+        return {
+            method: "GET",
+            url: "/admin/getUnapparovedUsers",
+            handler: authRequestHandlers.getUnapparovedUsers,
+        };
+    };
 
     return {
-        
-
-        reqtest
-    }
-
-}
+        reqtest,
+        getUnapparovedUsers,
+    };
+};
