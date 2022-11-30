@@ -14,12 +14,28 @@ module.exports = function AuthRequestSchema(opts) {
     //         handler: authRequestHandlers.verifyAuthOtvc,
     //     }
     // }
-
     const reqtest = () => {
         return {
             method: "POST",
             url: "/test",
             handler: authRequestHandlers.test,
+        };
+    };
+
+    const signup = () => {
+        return {
+            method: "POST",
+            schema: {
+                body: Joi.object().keys({
+                    username: Joi.string().required(),
+                    password: Joi.string().required(), // agey password hasing k liye use krna hai.
+                    email: Joi.string().required().email(),
+                    company_name: Joi.string().required(),
+                    city: Joi.string().required(),
+                }),
+            },
+            url: "/signup",
+            handler: authRequestHandlers.signup,
         };
     };
 
@@ -46,11 +62,12 @@ module.exports = function AuthRequestSchema(opts) {
             handler: authRequestHandlers.getAllEmployees,
         };
     };
-    const updateUserStatus = () => {
+
+    const acceptUser = () => {
         return {
             method: "PUT",
             url: "/admin/acceptUser",
-            handler: authRequestHandlers.updateUserStatus,
+            handler: authRequestHandlers.acceptUser,
         };
     };
 
@@ -62,12 +79,22 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const getUser = () => {
+        return {
+            method: "POST",
+            url: "/admin/users/getUser",
+            handler: authRequestHandlers.getUser,
+        };
+    };
+
     return {
         reqtest,
+        signup,
         getUnapparovedUsers,
         getAllUsers,
         getAllEmployees,
-        updateUserStatus,
+        acceptUser,
         deleteUser,
+        getUser,
     };
 };

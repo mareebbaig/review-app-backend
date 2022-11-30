@@ -8,6 +8,12 @@ module.exports = function AuthRequestHandlers(opts) {
         reply.send(JSON.stringify(sent));
     }
 
+    async function signup(request, response) {
+        const { body } = request;
+        const res1 = await authMediator.signup({ ...body });
+        response.send(res1);
+    }
+
     async function getUnapparovedUsers(request, response) {
         const res = await authMediator.getUnapparovedUsers();
         response.send(res);
@@ -22,9 +28,9 @@ module.exports = function AuthRequestHandlers(opts) {
         response.send(res);
     }
 
-    async function updateUserStatus(request, response) {
+    async function acceptUser(request, response) {
         const { body } = request;
-        const res = await authMediator.updateUserStatus({ ...body });
+        const res = await authMediator.acceptUser({ ...body });
         response.send(res);
     }
 
@@ -34,12 +40,20 @@ module.exports = function AuthRequestHandlers(opts) {
         response.send(res);
     }
 
+    async function getUser(request, response) {
+        const { body } = request;
+        const res = await authMediator.getUser({ ...body });
+        response.send(res);
+    }
+
     return {
         test,
+        signup,
         getUnapparovedUsers,
         getAllUsers,
         getAllEmployees,
-        updateUserStatus,
+        acceptUser,
         deleteUser,
+        getUser,
     };
 };

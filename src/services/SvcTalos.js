@@ -1,11 +1,39 @@
 module.exports = function SvcTalos(opts) {
-    const { svcCache, queryHandler, mdlTest, db } = opts;
+    const { mdlTest, db } = opts;
     async function getFromDB({ phone }) {
         //const token = await svcCache.getKV({ key: 'ELRP_TOKEN' });
         const result = await db["primary"].any(mdlTest.query, "");
         const response = result;
         return response;
     }
+
+    async function signup({
+        user_id,
+        admin_id,
+        first_name,
+        last_name,
+        email,
+        country,
+        organisation,
+        phone,
+        password,
+        type_id,
+    }) {
+        const result = await db["primary"].query(mdlTest.signup, {
+            user_id,
+            admin_id,
+            first_name,
+            last_name,
+            email,
+            country,
+            organisation,
+            phone,
+            password,
+            type_id,
+        });
+        return result;
+    }
+
     async function getUnapparovedUsers() {
         const result = await db["primary"].query(mdlTest.getUnapparovedUsers);
         return result;
@@ -20,8 +48,8 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
-    async function updateUserStatus({ user_id }) {
-        const result = await db["primary"].query(mdlTest.updateUserStatus, {
+    async function acceptUser({ user_id }) {
+        const result = await db["primary"].query(mdlTest.acceptUser, {
             user_id,
         });
         return result;
@@ -34,12 +62,21 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
+    async function getUser({ user_id }) {
+        const result = await db["primary"].query(mdlTest.getUser, {
+            user_id,
+        });
+        return result;
+    }
+
     return {
         getFromDB,
+        signup,
         getUnapparovedUsers,
         getAllUsers,
         getAllEmployees,
-        updateUserStatus,
+        acceptUser,
         deleteUser,
+        getUser,
     };
 };

@@ -10,6 +10,33 @@ module.exports = function AuthMediator(opts) {
         return account;
     }
 
+    async function signup({
+        user_id,
+        admin_id,
+        first_name,
+        last_name,
+        email,
+        country,
+        organisation,
+        phone,
+        password,
+        type_id,
+    }) {
+        res = await svcTalos.signup({
+            user_id,
+            admin_id,
+            first_name,
+            last_name,
+            email,
+            country,
+            organisation,
+            phone,
+            password,
+            type_id,
+        });
+        return res;
+    }
+
     async function getUnapparovedUsers() {
         const res = await svcTalos.getUnapparovedUsers();
         return res;
@@ -23,8 +50,8 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
-    async function updateUserStatus({ user_id }) {
-        const res = await svcTalos.updateUserStatus({ user_id });
+    async function acceptUser({ user_id }) {
+        const res = await svcTalos.acceptUser({ user_id });
         return res;
     }
 
@@ -33,12 +60,19 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
+    async function getUser({ user_id }) {
+        const res = await svcTalos.getUser({ user_id });
+        return res;
+    }
+
     return {
         test,
+        signup,
         getUnapparovedUsers,
         getAllUsers,
         getAllEmployees,
-        updateUserStatus,
+        acceptUser,
         deleteUser,
+        getUser,
     };
 };
