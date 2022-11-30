@@ -12,8 +12,18 @@ module.exports = function AuthRequestHandlers(opts) {
         const res = await authMediator.getUnapparovedUsers();
         response.send(res);
     }
+
+    async function SearchUsers(request, response) {
+        console.log('here');
+        console.log(request.params);
+        const  search  = request.params;
+        console.log(search);
+        const result = await authMediator.SearchUsers(search.username);
+        response.send(result);
+    }
     return {
         test,
         getUnapparovedUsers,
+        SearchUsers,
     };
 };

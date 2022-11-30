@@ -40,7 +40,6 @@
   "dependencies": {
     "@hapi/boom": "^9.1.0",
     "@hapi/joi": "^17.1.1",
-
     "amqplib": "^0.6.0",
     "async-redis": "^1.1.7",
     "awilix": "^4.2.1",
@@ -62,6 +61,7 @@
     "lodash": "^4.17.20",
     "nconf": "^0.10.0",
     "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.20",
     "pg-monitor": "^1.4.1",
     "pg-promise": "^10.5.8",
     "pino": "^5.12.0",
