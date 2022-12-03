@@ -30,9 +30,16 @@ module.exports = function AuthRequestSchema(opts) {
             handler: authRequestHandlers.getUnapparovedUsers,
         };
     };
-
+    const SearchUsers = () =>{
+        return {
+            method : "GET",
+            url: "/SearchUsers/:username",
+            handler: authRequestHandlers.SearchUsers,
+        };
+    };
     return {
         reqtest,
         getUnapparovedUsers,
+        SearchUsers,
     };
 };

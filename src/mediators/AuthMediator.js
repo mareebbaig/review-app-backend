@@ -14,9 +14,14 @@ module.exports = function AuthMediator(opts) {
         const res = await svcTalos.getUnapparovedUsers();
         return res;
     }
-
+    async function SearchUsers(search){
+        console.log("AuthMediator");
+        const result = await svcTalos.SearchUsers(search);
+        return result;
+    }
     return {
         test,
         getUnapparovedUsers,
+        SearchUsers,
     };
 };
