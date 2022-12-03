@@ -86,6 +86,14 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+
+    const SearchUsers = () =>{
+        return {
+            method : "GET",
+            url: "/SearchUsers/:username",
+            handler: authRequestHandlers.SearchUsers,
+        };
+    };
     return {
         reqtest,
         signup,
@@ -96,5 +104,6 @@ module.exports = function AuthRequestSchema(opts) {
         deleteUser,
         getUser,
         updateUser,
+        SearchUsers,
     };
 };
