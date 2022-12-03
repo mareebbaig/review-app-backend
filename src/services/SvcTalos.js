@@ -9,7 +9,6 @@ module.exports = function SvcTalos(opts) {
 
     async function signup({
         user_id,
-        admin_id,
         first_name,
         last_name,
         email,
@@ -21,7 +20,6 @@ module.exports = function SvcTalos(opts) {
     }) {
         const result = await db["primary"].query(mdlTest.signup, {
             user_id,
-            admin_id,
             first_name,
             last_name,
             email,
@@ -69,6 +67,27 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
+    async function updateUser({
+        user_id,
+        first_name,
+        last_name,
+        email,
+        country,
+        organisation,
+        phone,
+    }) {
+        const result = await db["primary"].query(mdlTest.updateUser, {
+            user_id,
+            first_name,
+            last_name,
+            email,
+            country,
+            organisation,
+            phone,
+        });
+        return result;
+    }
+
     return {
         getFromDB,
         signup,
@@ -78,5 +97,6 @@ module.exports = function SvcTalos(opts) {
         acceptUser,
         deleteUser,
         getUser,
+        updateUser,
     };
 };

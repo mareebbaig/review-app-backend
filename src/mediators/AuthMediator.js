@@ -12,7 +12,6 @@ module.exports = function AuthMediator(opts) {
 
     async function signup({
         user_id,
-        admin_id,
         first_name,
         last_name,
         email,
@@ -24,7 +23,6 @@ module.exports = function AuthMediator(opts) {
     }) {
         res = await svcTalos.signup({
             user_id,
-            admin_id,
             first_name,
             last_name,
             email,
@@ -65,6 +63,27 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
+    async function updateUser({
+        user_id,
+        first_name,
+        last_name,
+        email,
+        country,
+        organisation,
+        phone,
+    }) {
+        const res = await svcTalos.updateUser({
+            user_id,
+            first_name,
+            last_name,
+            email,
+            country,
+            organisation,
+            phone,
+        });
+        return res;
+    }
+
     return {
         test,
         signup,
@@ -74,5 +93,6 @@ module.exports = function AuthMediator(opts) {
         acceptUser,
         deleteUser,
         getUser,
+        updateUser,
     };
 };

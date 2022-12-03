@@ -25,15 +25,6 @@ module.exports = function AuthRequestSchema(opts) {
     const signup = () => {
         return {
             method: "POST",
-            schema: {
-                body: Joi.object().keys({
-                    username: Joi.string().required(),
-                    password: Joi.string().required(), // agey password hasing k liye use krna hai.
-                    email: Joi.string().required().email(),
-                    company_name: Joi.string().required(),
-                    city: Joi.string().required(),
-                }),
-            },
             url: "/signup",
             handler: authRequestHandlers.signup,
         };
@@ -87,6 +78,14 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const updateUser = () => {
+        return {
+            method: "PUT",
+            url: "/admin/users/updateUser",
+            handler: authRequestHandlers.updateUser,
+        };
+    };
+
     return {
         reqtest,
         signup,
@@ -96,5 +95,6 @@ module.exports = function AuthRequestSchema(opts) {
         acceptUser,
         deleteUser,
         getUser,
+        updateUser,
     };
 };

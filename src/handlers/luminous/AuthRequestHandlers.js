@@ -1,5 +1,5 @@
 module.exports = function AuthRequestHandlers(opts) {
-    const { authMediator } = opts;
+    const { authMediator, uuid } = opts;
 
     async function test(request, reply) {
         const { body, elSession } = request;
@@ -10,6 +10,7 @@ module.exports = function AuthRequestHandlers(opts) {
 
     async function signup(request, response) {
         const { body } = request;
+        body.user_id = uuid();
         const res1 = await authMediator.signup({ ...body });
         response.send(res1);
     }
@@ -46,6 +47,12 @@ module.exports = function AuthRequestHandlers(opts) {
         response.send(res);
     }
 
+    async function updateUser(request, response) {
+        const { body } = request;
+        const res = await authMediator.updateUser({ ...body });
+        response.send(res);
+    }
+
     return {
         test,
         signup,
@@ -55,5 +62,6 @@ module.exports = function AuthRequestHandlers(opts) {
         acceptUser,
         deleteUser,
         getUser,
+        updateUser,
     };
 };
