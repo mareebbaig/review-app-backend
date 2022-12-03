@@ -89,11 +89,10 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
-
-    async function SearchUsers(search){
+    async function SearchUsers(search) {
         console.log("SVC talos");
         const result = await db["primary"].query(mdlTest.SearchUsers, {
-            username : search + ':*',
+            username: search + ":*",
         });
         console.log(result);
         return result;

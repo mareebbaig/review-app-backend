@@ -54,9 +54,9 @@ module.exports = function AuthRequestHandlers(opts) {
     }
 
     async function SearchUsers(request, response) {
-        console.log('here');
+        console.log("here");
         console.log(request.params);
-        const  search  = request.params;
+        const search = request.params;
         console.log(search);
         const result = await authMediator.SearchUsers(search.username);
         response.send(result);
@@ -65,7 +65,6 @@ module.exports = function AuthRequestHandlers(opts) {
         test,
         signup,
         getUnapparovedUsers,
-        profileApproval
         getAllUsers,
         getAllEmployees,
         acceptUser,

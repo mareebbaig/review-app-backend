@@ -84,7 +84,7 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
-    async function SearchUsers(search){
+    async function SearchUsers(search) {
         console.log("AuthMediator");
         const result = await svcTalos.SearchUsers(search);
         return result;
@@ -94,7 +94,7 @@ module.exports = function AuthMediator(opts) {
         test,
         signup,
         getUnapparovedUsers,
-                getAllUsers,
+        getAllUsers,
         getAllEmployees,
         acceptUser,
         deleteUser,
