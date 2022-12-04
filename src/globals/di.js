@@ -5,7 +5,7 @@ Joi.objectId = require("joi-objectid")(Joi);
 const Boom = require("@hapi/boom");
 const _ = require("lodash");
 const uuid = require("uuid");
-
+const bcrypt = require("bcrypt");
 const container = awilix.createContainer();
 
 module.exports = async function FastDI(options = {}) {
@@ -25,6 +25,7 @@ module.exports = async function FastDI(options = {}) {
         Boom: awilix.asValue(Boom),
         _: awilix.asValue(_),
         uuid: awilix.asValue(uuid),
+        bcrypt: awilix.asValue(bcrypt),
     });
 
     container.loadModules(
