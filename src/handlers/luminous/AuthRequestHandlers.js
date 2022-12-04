@@ -14,11 +14,11 @@ module.exports = function AuthRequestHandlers(opts) {
     }
 
     async function SearchUsers(request, response) {
-        console.log('here');
+        const search = request.params;
         console.log(request.params);
-        const  search  = request.params;
-        console.log(search);
-        const result = await authMediator.SearchUsers(search.username);
+        const result = await authMediator.SearchUsers(
+            search.username.split(" ")
+        );
         response.send(result);
     }
     return {

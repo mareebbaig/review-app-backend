@@ -4,6 +4,6 @@ module.exports = function MdlTest() {
         getUnapparovedUsers:
             "Select * from employees where is_approved = FALSE;",
         SearchUsers:
-            "select username from employees where to_tsvector(username) @@ to_tsquery($(username))",
+            "select * from employees where (to_tsvector(first_name) @@ to_tsquery($(username))) OR (to_tsvector(last_name) @@ to_tsquery($(username))) ",
     };
 };
