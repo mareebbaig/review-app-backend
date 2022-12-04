@@ -92,6 +92,14 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const updateUser = () => {
+        return {
+            method: "PUT",
+            url: "/admin/users/updateUser",
+            handler: authRequestHandlers.updateUser,
+        };
+    };
+
     const updateUserbyAdmin = () => {
         return {
             method: "PUT",
@@ -100,11 +108,27 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
-    const updateUser = () => {
+    const insertEmployeeData = () => {
         return {
-            method: "PUT",
-            url: "/admin/users/updateUser",
-            handler: authRequestHandlers.updateUser,
+            method: "POST",
+            url: "/users/insertEmployeeData",
+            handler: authRequestHandlers.insertEmployeeData,
+        };
+    };
+
+    const getEmployeeById = () => {
+        return {
+            method: "POST",
+            url: "/users/getEmployeeById",
+            handler: authRequestHandlers.getEmployeeById,
+        };
+    };
+
+    const getEmployeeByUserId = () => {
+        return {
+            method: "POST",
+            url: "/users/getEmployeeByUserId",
+            handler: authRequestHandlers.getEmployeeByUserId,
         };
     };
 
@@ -127,6 +151,9 @@ module.exports = function AuthRequestSchema(opts) {
         getUser,
         updateUserbyAdmin,
         updateUser,
+        insertEmployeeData,
+        getEmployeeById,
+        getEmployeeByUserId,
         SearchUsers,
     };
 };

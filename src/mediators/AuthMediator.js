@@ -89,10 +89,65 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
+    async function insertIdentityNumber({
+        identity_id,
+        identity_number,
+        identity_type,
+    }) {
+        const res = await svcTalos.insertIdentityNumber({
+            identity_id,
+            identity_number,
+            identity_type,
+        });
+        return res;
+    }
+
+    async function insertEmployeeData({
+        emp_id,
+        user_id,
+        first_name,
+        last_name,
+        email,
+        organisation,
+        submitted_by,
+        phone,
+        reason_of_submission,
+        submission_title,
+        submission_description,
+        identity_id,
+    }) {
+        const res = await svcTalos.insertEmployeeData({
+            emp_id,
+            user_id,
+            first_name,
+            last_name,
+            email,
+            organisation,
+            submitted_by,
+            phone,
+            reason_of_submission,
+            submission_title,
+            submission_description,
+            identity_id,
+        });
+        return res;
+    }
+
+    async function getEmployeeById({ emp_id }) {
+        const res = await svcTalos.getEmployeeById({ emp_id });
+
+        return res;
+    }
+
+    async function getEmployeeByUserId({ user_id }) {
+        console.log(user_id);
+        const res = await svcTalos.getEmployeeByUserId({ user_id });
+        return res;
+    }
+
     async function SearchUsers(search) {
-        console.log("AuthMediator");
-        const result = await svcTalos.SearchUsers(search);
-        return result;
+        const res = await svcTalos.SearchUsers(search);
+        return res;
     }
 
     return {
@@ -106,6 +161,10 @@ module.exports = function AuthMediator(opts) {
         deleteUser,
         getUser,
         updateUser,
+        insertIdentityNumber,
+        insertEmployeeData,
+        getEmployeeById,
+        getEmployeeByUserId,
         SearchUsers,
     };
 };

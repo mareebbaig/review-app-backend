@@ -1,5 +1,6 @@
 module.exports = function AuthRequestHandlers(opts) {
     const { authMediator, uuid, bcrypt } = opts;
+    // const { secret } = config.get("jwt");
 
     async function test(request, reply) {
         const { body, elSession } = request;
@@ -12,8 +13,8 @@ module.exports = function AuthRequestHandlers(opts) {
         const { body } = request;
         body.password = await bcrypt.hash(body.password, 10);
         body.user_id = uuid();
-        const res1 = await authMediator.signup({ ...body });
-        response.send(res1);
+        const res = await authMediator.signup({ ...body });
+        response.send(res);
     }
 
     async function getUnapparovedUsers(request, response) {
@@ -56,35 +57,49 @@ module.exports = function AuthRequestHandlers(opts) {
 
     async function login(request, response) {
         const { email, password } = request.body;
-
-        const data = await authMediator.login(email);
-        console.log("ye aya hai data base se: ", data);
-        if (!data.length) {
-            response.send(data); // response khali return horha hai yahan pe.
+        const res = await authMediator.login(email);
+        console.log("ye aya hai res base se: ", res);
+        if (bcrypt.compareSync(password, res[0].password)) {
+            // const secret = Buffer.from(
+            //     "62197fc8886bd3b739dd2cc8aa109d0be93acdea64c07b8908168b80daf1dc47",
+            //     "hex"
+            // );
+            // const payload = {
+            //     email: res[0].email,
+            //     password: res[0].password,
+            // };
+            // const encryptedJwt = await jwtFile.generateJWT(
+            //     "testsub",
+            //     payload,
+            //     secret
+            // );
+            res.jwt = "";
         } else {
-            if (bcrypt.compareSync(password, data[0].password)) {
-                // const secret = Buffer.from(
-                //     "62197fc8886bd3b739dd2cc8aa109d0be93acdea64c07b8908168b80daf1dc47",
-                //     "hex"
-                // );
-                // const payload = {
-                //     email: data[0].email,
-                //     password: data[0].password,
-                // };
-                // const encryptedJwt = await jwtFile.generateJWT(
-                //     "testsub",
-                //     payload,
-                //     secret
-                // );
-                data[0].jwt = "1234";
-                response.send(
-                    data
-                    // JWT: encryptedJwt,
-                );
-            } else {
-                response.send({ error: "password did not match" });
-            }
+            res.error = "password did not match";
         }
+        response.send(res);
+    }
+
+    async function insertEmployeeData(request, response) {
+        const { body } = request;
+        body.identity_id = uuid();
+        body.emp_id = uuid();
+        const res = await authMediator.insertIdentityNumber({ ...body });
+        const res1 = await authMediator.insertEmployeeData({ ...body });
+        response.send(res1);
+    }
+
+    async function getEmployeeById(request, response) {
+        const { body } = request;
+        const res = await authMediator.getEmployeeById({ ...body });
+        response.send(res);
+    }
+
+    async function getEmployeeByUserId(request, response) {
+        const { body } = request;
+        console.log({ ...body });
+        const res = await authMediator.getEmployeeByUserId({ ...body });
+        response.send(res);
     }
 
     async function SearchUsers(request, response) {
@@ -105,6 +120,9 @@ module.exports = function AuthRequestHandlers(opts) {
         deleteUser,
         getUser,
         updateUser,
+        insertEmployeeData,
+        getEmployeeById,
+        getEmployeeByUserId,
         SearchUsers,
     };
 };
