@@ -30,6 +30,20 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const login = () => {
+        return {
+            method: "POST",
+            schema: {
+                body: Joi.object().keys({
+                    email: Joi.string().email().required(),
+                    password: Joi.string().required(),
+                }),
+            },
+            url: "/login",
+            handler: authRequestHandlers.login,
+        };
+    };
+
     const getUnapparovedUsers = () => {
         return {
             method: "GET",
@@ -78,6 +92,14 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const updateUserbyAdmin = () => {
+        return {
+            method: "PUT",
+            url: "/users/updateUser",
+            handler: authRequestHandlers.updateUser,
+        };
+    };
+
     const updateUser = () => {
         return {
             method: "PUT",
@@ -86,10 +108,9 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
-
-    const SearchUsers = () =>{
+    const SearchUsers = () => {
         return {
-            method : "GET",
+            method: "GET",
             url: "/SearchUsers/:username",
             handler: authRequestHandlers.SearchUsers,
         };
@@ -97,12 +118,14 @@ module.exports = function AuthRequestSchema(opts) {
     return {
         reqtest,
         signup,
+        login,
         getUnapparovedUsers,
         getAllUsers,
         getAllEmployees,
         acceptUser,
         deleteUser,
         getUser,
+        updateUserbyAdmin,
         updateUser,
         SearchUsers,
     };

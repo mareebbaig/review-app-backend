@@ -3,6 +3,7 @@ module.exports = function MdlTest() {
         query: "SELECT * from test limit 1",
 
         signup: "insert into hrtable(user_id , first_name , last_name , email , country , organisation , phone , password , type_id) VALUES(${user_id}, ${first_name} , ${last_name} , ${email} , ${country} , ${organisation} , ${phone} , ${password} , ${type_id})",
+        login: "SELECT * FROM hrtable WHERE email = ${email};",
         getAllUsers: "Select * from hrtable",
         getAllEmployees: "Select * from employee",
 
