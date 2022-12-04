@@ -104,7 +104,9 @@ module.exports = function AuthRequestHandlers(opts) {
 
     async function SearchUsers(request, response) {
         const search = request.params;
-        const result = await authMediator.SearchUsers(search.username);
+        const result = await authMediator.SearchUsers(
+            search.username.split(" ")
+        );
         response.send(result);
     }
     return {
