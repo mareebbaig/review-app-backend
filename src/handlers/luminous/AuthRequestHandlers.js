@@ -76,10 +76,11 @@ module.exports = function AuthRequestHandlers(opts) {
                 //     payload,
                 //     secret
                 // );
-                response.send({
-                    data,
+                data[0].jwt = "1234";
+                response.send(
+                    data
                     // JWT: encryptedJwt,
-                });
+                );
             } else {
                 response.send({ error: "password did not match" });
             }

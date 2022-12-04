@@ -16,8 +16,7 @@ module.exports = function MdlTest() {
 
         getUser: "select * from hrtable where user_id = ${user_id};",
         query: "select username from employees where to_tsvector(username) @@ to_tsquery('shaheer')",
-        getUnapparovedUsers:
-            "Select * from employees where is_approved = FALSE;",
+        getUnapparovedUsers: "Select * from hrtable where is_approved = FALSE;",
         SearchUsers:
             "select username from employees where to_tsvector(username) @@ to_tsquery($(username))",
     };
