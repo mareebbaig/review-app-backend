@@ -13,7 +13,7 @@ module.exports = function MdlTest() {
         getUser: "select * from hrtable where user_id = ${user_id};",
         query: "select username from employees where to_tsvector(username) @@ to_tsquery('shaheer')",
         getUnapparovedUsers: "Select * from hrtable where is_approved = FALSE;",
-        
+
         getAllEmployees: "Select * from employee",
 
         insertIdentityNumber:
@@ -26,7 +26,6 @@ module.exports = function MdlTest() {
             "select * from employee where user_id = ${user_id};",
 
         SearchUsers:
-            "select * from employees where (to_tsvector(first_name) @@ to_tsquery($(username))) OR (to_tsvector(last_name) @@ to_tsquery($(username))) ",
-
+            "select * from employee where (to_tsvector(first_name) @@ to_tsquery($(username))) OR (to_tsvector(last_name) @@ to_tsquery($(username))) ",
     };
 };
