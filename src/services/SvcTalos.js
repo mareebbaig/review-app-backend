@@ -96,14 +96,71 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
+    async function insertIdentityNumber({
+        identity_id,
+        identity_number,
+        identity_type,
+    }) {
+        const result = await db["primary"].query(mdlTest.insertIdentityNumber, {
+            identity_id,
+            identity_number,
+            identity_type,
+        });
+        return result;
+    }
+
+    async function insertEmployeeData({
+        emp_id,
+        user_id,
+        first_name,
+        last_name,
+        email,
+        organisation,
+        submitted_by,
+        phone,
+        reason_of_submission,
+        submission_title,
+        submission_description,
+        identity_id,
+    }) {
+        const result = await db["primary"].query(mdlTest.insertEmployeeData, {
+            emp_id,
+            user_id,
+            first_name,
+            last_name,
+            email,
+            organisation,
+            submitted_by,
+            phone,
+            reason_of_submission,
+            submission_title,
+            submission_description,
+            identity_id,
+        });
+        return result;
+    }
+
+    async function getEmployeeById({ emp_id }) {
+        const result = await db["primary"].query(mdlTest.getEmployeeById, {
+            emp_id,
+        });
+        return result;
+    }
+
+    async function getEmployeeByUserId({ user_id }) {
+        const result = await db["primary"].query(mdlTest.getEmployeeByUserId, {
+            user_id,
+        });
+        return result;
+    }
+
     async function SearchUsers(search) {
-        console.log("SVC talos");
         const result = await db["primary"].query(mdlTest.SearchUsers, {
             username: search + ":*",
         });
-        console.log(result);
         return result;
     }
+
     return {
         getFromDB,
         signup,
@@ -115,6 +172,10 @@ module.exports = function SvcTalos(opts) {
         deleteUser,
         getUser,
         updateUser,
+        insertIdentityNumber,
+        insertEmployeeData,
+        getEmployeeById,
+        getEmployeeByUserId,
         SearchUsers,
     };
 };
