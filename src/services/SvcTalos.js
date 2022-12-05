@@ -32,6 +32,13 @@ module.exports = function SvcTalos(opts) {
         return result;
     }
 
+    async function verifyUser(user_id) {
+        const result = await db["primary"].query(mdlTest.verifyUser, {
+            user_id,
+        });
+        return result;
+    }
+
     async function login(email) {
         const result = await db["primary"].query(mdlTest.login, {
             email,
@@ -164,6 +171,7 @@ module.exports = function SvcTalos(opts) {
     return {
         getFromDB,
         signup,
+        verifyUser,
         login,
         getUnapparovedUsers,
         getAllUsers,

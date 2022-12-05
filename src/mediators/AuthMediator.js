@@ -35,6 +35,11 @@ module.exports = function AuthMediator(opts) {
         return res;
     }
 
+    async function verifyUser(user_id) {
+        res = await svcTalos.verifyUser(user_id);
+        return res;
+    }
+
     async function login(email) {
         res = await svcTalos.login(email);
         return res;
@@ -153,6 +158,7 @@ module.exports = function AuthMediator(opts) {
     return {
         test,
         signup,
+        verifyUser,
         login,
         getUnapparovedUsers,
         getAllUsers,

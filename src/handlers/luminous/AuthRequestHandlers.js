@@ -1,6 +1,15 @@
 module.exports = function AuthRequestHandlers(opts) {
-    const { authMediator, uuid, bcrypt } = opts;
-    // const { secret } = config.get("jwt");
+    const {
+        authMediator,
+        transporter,
+        uuid,
+        cache,
+        bcrypt,
+        emailValidator,
+        config,
+    } = opts;
+    const { sendConfirmationEmail } = transporter;
+    const { secret } = config.get("jwt");
 
     async function test(request, reply) {
         const { body, elSession } = request;
@@ -11,10 +20,36 @@ module.exports = function AuthRequestHandlers(opts) {
 
     async function signup(request, response) {
         const { body } = request;
-        body.password = await bcrypt.hash(body.password, 10);
-        body.user_id = uuid();
-        const res = await authMediator.signup({ ...body });
+
+        if (emailValidator.isCompanyEmail(body.email)) {
+            body.password = await bcrypt.hash(body.password, 10);
+            body.user_id = uuid();
+            res = await authMediator.signup({ ...body });
+            // token = await bcrypt.hash(body.user_id, 5);
+            await cache["primary"].set("token", body.user_id);
+            await cache["primary"].expire("token", 60);
+            sendConfirmationEmail(
+                body.first_name + " " + body.last_name,
+                body.email,
+                body.user_id
+            );
+        } else {
+            res = { error: "not a valid company email" };
+        }
         response.send(res);
+    }
+
+    async function verifyUser(request, response) {
+        const { token } = request.params;
+        const cacheToken = await cache["primary"].get("token");
+        if (!cacheToken) {
+            response.send("verification link experied");
+        } else if (cacheToken != token) {
+            response.send("error verifying email");
+        } else {
+            const res = await authMediator.verifyUser(token);
+            response.send(res);
+        }
     }
 
     async function getUnapparovedUsers(request, response) {
@@ -112,6 +147,7 @@ module.exports = function AuthRequestHandlers(opts) {
     return {
         test,
         signup,
+        verifyUser,
         login,
         getUnapparovedUsers,
         getAllUsers,

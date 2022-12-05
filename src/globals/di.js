@@ -7,6 +7,12 @@ const _ = require("lodash");
 const uuid = require("uuid");
 const bcrypt = require("bcrypt");
 const container = awilix.createContainer();
+const CompanyEmailValidator = require("company-email-validator");
+const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const axios = require("axios");
+const nodemailerSendgrid = require("nodemailer-sendgrid");
+const sgMail = require("@sendgrid/mail");
 
 module.exports = async function FastDI(options = {}) {
     const logger = _.get(options, "logger", undefined);
@@ -26,6 +32,12 @@ module.exports = async function FastDI(options = {}) {
         _: awilix.asValue(_),
         uuid: awilix.asValue(uuid),
         bcrypt: awilix.asValue(bcrypt),
+        emailValidator: awilix.asValue(CompanyEmailValidator),
+        jwt: awilix.asValue(jwt),
+        nodemailer: awilix.asValue(nodemailer),
+        axios: awilix.asValue(axios),
+        sgMail: awilix.asValue(sgMail),
+        nodemailerSendgrid: awilix.asValue(nodemailerSendgrid),
     });
 
     container.loadModules(
