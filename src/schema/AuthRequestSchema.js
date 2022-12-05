@@ -30,6 +30,14 @@ module.exports = function AuthRequestSchema(opts) {
         };
     };
 
+    const verifyUser = () => {
+        return {
+            method: "GET",
+            url: "/verifyUser:token",
+            handler: authRequestHandlers.verifyUser,
+        };
+    };
+
     const login = () => {
         return {
             method: "POST",
@@ -142,6 +150,7 @@ module.exports = function AuthRequestSchema(opts) {
     return {
         reqtest,
         signup,
+        verifyUser,
         login,
         getUnapparovedUsers,
         getAllUsers,
